@@ -1,0 +1,44 @@
+@model project_1_taskflow.Models.TodoItem
+
+@{
+    ViewData["Title"] = "Xóa Task";
+}
+
+<h2>🗑️ Xác nhận xóa</h2>
+<hr />
+
+<div class="alert alert-danger">
+    <strong>Cảnh báo!</strong> Bạn có chắc chắn muốn xóa task này? Hành động này không thể hoàn tác.
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h4>@Model.Title</h4>
+        <p>@Model.Description</p>
+        <p>
+            <strong>Danh mục:</strong> 
+            @if (Model.Category != null)
+            {
+                <span class="badge" style="background-color: @Model.Category.Color">@Model.Category.Name</span>
+            }
+        </p>
+        <p>
+            <strong>Trạng thái:</strong>
+            @if (Model.Status == project_1_taskflow.Models.TodoStatus.Completed)
+            {
+                <span class="badge bg-success">Hoàn thành</span>
+            }
+            else
+            {
+                <span>@Model.Status</span>
+            }
+        </p>
+    </div>
+</div>
+
+<form asp-action="Delete" method="post" class="mt-3">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">🗑️ Xác nhận xóa</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>
